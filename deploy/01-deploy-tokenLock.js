@@ -1,5 +1,4 @@
 const { getNamedAccounts, deployments, chainId } = require("hardhat");
-const { verify } = require("../utils/verify");
 
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
@@ -15,9 +14,6 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   log("==========Contract Deployed Successfully==========");
   log(`TokenLock deployed to ${tokenLock.address}`);
 
-  if(chainId === 5){
-    await verify(tokenLock.address)
-  }
 };
 
 
