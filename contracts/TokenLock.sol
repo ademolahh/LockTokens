@@ -124,7 +124,7 @@ contract TokenLock is Ownable {
             revert notTime();
         if (balance < amount * decimal) revert insufficientBalance();
         unchecked {
-            erc20.tokenBalance -= amount;
+            erc20.tokenBalance -= amount * decimal;
             if (erc20.tokenBalance == 0) {
                 erc20.lockPeriod = 0;
                 erc20.lockTime = 0;
