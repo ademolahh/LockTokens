@@ -1,0 +1,11 @@
+node_modules
+.env
+utils
+coverage
+coverage.json
+yarn-error.log
+gas-report.txt
+#Hardhat files
+cache
+artifacts
+
