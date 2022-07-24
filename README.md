@@ -1,13 +1,21 @@
-# Sample Hardhat Project
+# Lock Tokens
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+     This smart contract is used to lock tokens for specific time,
+     It doesnt come with reward,
+     It supports Any ERC20,ERC721,ERC1155 token
+     
+# Build and Test
+Use node version 14 or 16
+```
+npm install
+```
 
-Try running some of the following tasks:
+# Deployemnent
+```
+npx hardhat deploy --network <network>
+```
 
-```shell
-npx hardhat help
+# Test
+```
 npx hardhat test
-GAS_REPORT=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
 ```
