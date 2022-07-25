@@ -55,7 +55,7 @@ contract TokenLock is Ownable {
     mapping(address => mapping(address => mapping(uint256 => MyERC1155)))
         private ERC1155Info;
 
-    modifier contractStatus() {
+    modifier contractState() {
         if (paused) revert ContractIsPaused();
         _;
     }
@@ -76,7 +76,7 @@ contract TokenLock is Ownable {
         address _token,
         uint256 amount,
         uint128 lockPeriod
-    ) public contractStatus {
+    ) public contractState {
         IERC20Metadata token = IERC20Metadata(_token);
         uint256 decimal = 10**token.decimals();
         if (lockPeriod == 0) revert LockPeriodCannotBeZero();
@@ -160,7 +160,7 @@ contract TokenLock is Ownable {
         address _token,
         uint256 tokenID,
         uint256 _lockPeriod
-    ) public contractStatus {
+    ) public contractState {
         IERC721 token = IERC721(_token);
         if (!token.isApprovedForAll(msg.sender, address(this)))
             revert ContractNotApproved();
@@ -237,7 +237,7 @@ contract TokenLock is Ownable {
         uint256 tokenID,
         uint256 amount,
         uint128 _lockPeriod
-    ) public contractStatus {
+    ) public contractState {
         IERC1155 token = IERC1155(_token);
         if (!token.isApprovedForAll(msg.sender, address(this)))
             revert ContractNotApproved();
@@ -326,11 +326,15 @@ contract TokenLock is Ownable {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    //                                CONTRACT-STATUS                                         //
+    //                                CONTRACT-STATE                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////
 
-    function flipContractStatus(bool _status) external onlyOwner {
-        paused = _status;
+    function flipContractState(bool _state) external onlyOwner {
+        paused = _state;
+    }
+
+    function State() external view returns (bool) {
+        return paused;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
