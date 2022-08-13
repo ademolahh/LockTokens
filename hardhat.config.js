@@ -10,13 +10,10 @@ require("dotenv").config();
  * @type import('hardhat/config').HardhatUserConfig
  */
 
-const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
-const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || "";
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
-const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "";
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL || "";
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const POLYGON_MAINNET_RPC_URL = process.env.POLYGON_MAINNET_RPC_URL || "";
 const REPORT_GAS = process.env.REPORT_GAS || true;
 
 module.exports = {
@@ -30,22 +27,10 @@ module.exports = {
     },
     goerli: {
       url: GOERLI_RPC_URL,
-      accounts: [PRIVATE_KEY],
+      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
       saveDeployments: true,
       chainId: 5,
       blockConfirmations: 6,
-    },
-    mainnet: {
-      url: MAINNET_RPC_URL,
-      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
-      saveDeployments: true,
-      chainId: 1,
-    },
-    polygon: {
-      url: POLYGON_MAINNET_RPC_URL,
-      accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
-      saveDeployments: true,
-      chainId: 137,
     },
   },
 
@@ -58,7 +43,7 @@ module.exports = {
   },
   contractSizer: {
     runOnCompile: true,
-    only: ["TokenLock"],
+    // only: ["E.sol"],
   },
   namedAccounts: {
     deployer: {
@@ -77,9 +62,17 @@ module.exports = {
     ],
   },
   etherscan: {
-    apiKey: {
-      goerli: GOERLI_RPC_URL,
-    },
+    apiKey: { goerli: ETHERSCAN_API_KEY },
+    customChains: [
+      {
+        network: "goerli",
+        chainId: 5,
+        urls: {
+          apiURL: "https://api-goerli.etherscan.io/api",
+          browserURL: " https://goerli.etherscan.io/",
+        },
+      },
+    ],
   },
   mocha: {
     timeout: 200000, // 200 seconds max for running tests
